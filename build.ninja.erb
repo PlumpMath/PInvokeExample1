@@ -6,6 +6,13 @@ ldflags =
 libs =
 cs = mcs
 csflags = -optimize- -debug
+<%- if /darwin/ =~ RUBY_PLATFORM -%>
+dylib = dylib
+dylib_cxxflags =
+<%- else -%>
+dylib = so
+dylib_cxxflags = -fPIC
+<%- end -%>
 
 rule cxx
   description = CXX $out
@@ -19,5 +26,12 @@ rule cs
   command = $cs $csflags -out:$out $in
 
 build $builddir/pinvoke_native.o: cxx pinvoke_native.cc
-build libpinvoke_native.dylib: dylib $builddir/pinvoke_native.o
+  cxxflags = $cxxflags $dylib_cxxflags
+build libpinvoke_native.$dylib: dylib $builddir/pinvoke_native.o
 build pinvoke_managed.exe: cs pinvoke_managed.cs
+
+rule configure
+  description = CONFIGURE $out
+  command = /bin/sh ./gen_build_ninja.sh $in $out
+  generator = 1
+build build.ninja: configure build.ninja.erb

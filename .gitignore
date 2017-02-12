@@ -1,4 +1,6 @@
 *.dylib
 *.exe
 *.mdb
+*.so
 build
+build.ninja
