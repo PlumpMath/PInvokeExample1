@@ -63,12 +63,11 @@ class Program
 
 		{
 			var n = 123;
-			var ptr = new IntPtr();
-			var sz = Marshal.SizeOf(typeof(int));
-			ptr = Marshal.AllocCoTaskMem(sz);
+			var ptr = Marshal.AllocCoTaskMem(Marshal.SizeOf(n));
 			Marshal.WriteInt32(ptr, n);
 			Func5(ptr);
 			n = Marshal.ReadInt32(ptr);
+			Marshal.FreeCoTaskMem(ptr);
 			Console.WriteLine("Managed: n = " + n);
 		}
 	}
