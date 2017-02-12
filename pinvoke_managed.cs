@@ -1,8 +1,4 @@
-﻿// 参考:
-// Interop with Native Libraries | Mono
-// http://www.mono-project.com/docs/advanced/pinvoke/
-
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 class Program
