@@ -1,0 +1,4 @@
+*.dylib
+*.exe
+*.mdb
+build

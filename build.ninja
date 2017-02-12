@@ -1,0 +1,23 @@
+builddir = build
+cxx = clang++ -std=c++11
+cxxflags = -Wall -Wextra -O0 -g
+cppflags =
+ldflags =
+libs =
+cs = mcs
+csflags = -optimize- -debug
+
+rule cxx
+  description = CXX $out
+  depfile = $out.d
+  command = $cxx -MMD -MF $out.d $cxxflags $cppflags -o $out -c $in
+rule dylib
+  description = DYLIB $out
+  command = $cxx -shared -MMD -MF $out.d $cxxflags $cppflags -o $out $in
+rule cs
+  description = CS $out
+  command = $cs $csflags -out:$out $in
+
+build $builddir/pinvoke_native.o: cxx pinvoke_native.cc
+build libpinvoke_native.dylib: dylib $builddir/pinvoke_native.o
+build pinvoke_managed.exe: cs pinvoke_managed.cs
