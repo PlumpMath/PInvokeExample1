@@ -65,6 +65,54 @@ DLL_EXPORT void Func5(int *p)
 	}
 }
 
+DLL_EXPORT void Func6(S s)
+{
+	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "  s.n = " << s.n << std::endl;
+	s.n = 456;
+	std::cout << "    => " << s.n << std::endl;
+}
+
+DLL_EXPORT void Func7(S *p)
+{
+	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "  p = " << p << std::endl;
+	std::cout << "  p->n = " << p->n << std::endl;
+	p->n = 456;
+	std::cout << "    => " << p->n << std::endl;
+}
+
+DLL_EXPORT void Func8(S *p)
+{
+	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "  p = " << p << std::endl;
+	std::cout << "  p->n = " << p->n << std::endl;
+	p->n = 456;
+	std::cout << "    => " << p->n << std::endl;
+}
+
+DLL_EXPORT void Func9(S s)
+{
+	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "  s.n = " << s.n << std::endl;
+	s.n = 456;
+	std::cout << "    => " << s.n << std::endl;
+}
+
+DLL_EXPORT void Func10(S *p)
+{
+	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "  p = " << p << std::endl;
+	if (p != nullptr) {
+		std::cout << "  p->n = " << p->n << std::endl;
+		p->n = 678;
+		std::cout << "    => " << p->n << std::endl;
+		std::cout << "  p->b = " << (int)p->b << std::endl;
+		p->b = 90;
+		std::cout << "    => " << (int)p->b << std::endl;
+	}
+}
+
 // Local variables:
 // mode: c++
 // coding: utf-8-with-signature

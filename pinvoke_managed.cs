@@ -32,6 +32,16 @@ class Program
 	static extern void Func4([Out] int n);
 	[DllImport("pinvoke_native")]
 	static extern void Func5(IntPtr n);
+	[DllImport("pinvoke_native")]
+	static extern void Func6(S s);
+	[DllImport("pinvoke_native")]
+	static extern void Func7(ref S s);
+	[DllImport("pinvoke_native")]
+	static extern void Func8(out S s);
+	[DllImport("pinvoke_native")]
+	static extern void Func9([Out] S s);
+	[DllImport("pinvoke_native")]
+	static extern void Func10(IntPtr ptr);
 
 	static void Main(string[] args)
 	{
@@ -69,6 +79,58 @@ class Program
 			n = Marshal.ReadInt32(ptr);
 			Marshal.FreeCoTaskMem(ptr);
 			Console.WriteLine("Managed: n = " + n);
+		}
+
+		{
+			var s = new S { n = 123 };
+			Func6(s);
+			Console.WriteLine("Managed: s.n = " + s.n);
+		}
+
+		{
+			var s = new S { n = 123 };
+			Func7(ref s);
+			Console.WriteLine("Managed: s.n = " + s.n);
+		}
+
+		{
+			var s = new S { n = 123 };
+			Func8(out s);
+			Console.WriteLine("Managed: s.n = " + s.n);
+		}
+
+		{
+			var s = new S { n = 123 };
+			Func9(s);
+			Console.WriteLine("Managed: s.n = " + s.n);
+		}
+
+		{
+			var s = new S { n = 123, b = 45 };
+			var ptr = Marshal.AllocCoTaskMem(Marshal.SizeOf(s));
+			Marshal.StructureToPtr(s, ptr, false);
+			Func10(ptr);
+			s = (S)Marshal.PtrToStructure(ptr, typeof(S));
+			Marshal.FreeCoTaskMem(ptr);
+			Console.WriteLine("Managed: s.n = " + s.n + ", s.b = " + s.b);
+		}
+
+		{
+			var s = new S { n = 123, b = 45 };
+			var ptr = Marshal.AllocCoTaskMem(Marshal.SizeOf(s));
+			var ofs = 0;
+			Marshal.WriteInt32(ptr, ofs, s.n);
+			ofs += 4;
+			Marshal.WriteByte(ptr, ofs, s.b);
+			ofs += 1;
+			Func10(ptr);
+			ofs = 0;
+			s.n = Marshal.ReadInt32(ptr, ofs);
+			ofs += 4;
+			s.b = Marshal.ReadByte(ptr, ofs);
+			ofs += 1;
+			Marshal.FreeCoTaskMem(ptr);
+			Console.WriteLine("Managed: s.n = " + s.n + ", s.b = " + s.b);
 		}
 	}
 }
