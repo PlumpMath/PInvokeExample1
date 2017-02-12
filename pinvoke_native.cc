@@ -77,18 +77,22 @@ DLL_EXPORT void Func7(S *p)
 {
 	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
 	std::cout << "  p = " << p << std::endl;
-	std::cout << "  p->n = " << p->n << std::endl;
-	p->n = 456;
-	std::cout << "    => " << p->n << std::endl;
+	if (p != nullptr) {
+		std::cout << "  p->n = " << p->n << std::endl;
+		p->n = 456;
+		std::cout << "    => " << p->n << std::endl;
+	}
 }
 
 DLL_EXPORT void Func8(S *p)
 {
 	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
 	std::cout << "  p = " << p << std::endl;
-	std::cout << "  p->n = " << p->n << std::endl;
-	p->n = 456;
-	std::cout << "    => " << p->n << std::endl;
+	if (p != nullptr) {
+		std::cout << "  p->n = " << p->n << std::endl;
+		p->n = 456;
+		std::cout << "    => " << p->n << std::endl;
+	}
 }
 
 DLL_EXPORT void Func9(S s)
