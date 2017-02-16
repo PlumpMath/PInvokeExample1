@@ -1,6 +1,11 @@
-﻿#include <iostream>
+﻿#include <cstdint>
+#include <iostream>
 
+#if defined(_MSC_VER)
+#define DLL_EXPORT extern "C" _declspec(dllexport)
+#else
 #define DLL_EXPORT extern "C"
+#endif
 
 struct S {
 	int n;
@@ -14,12 +19,12 @@ public:
 
 DLL_EXPORT void Func0()
 {
-	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
 }
 
 DLL_EXPORT void Func1(int n)
 {
-	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
 	std::cout << "  n = " << n << std::endl;
 	n = 456;
 	std::cout << "    => " << n << std::endl;
@@ -27,7 +32,7 @@ DLL_EXPORT void Func1(int n)
 
 DLL_EXPORT void Func2(int *p)
 {
-	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
 	std::cout << "  p = " << p << std::endl;
 	std::cout << "  *p = " << *p << std::endl;
 	if (p != nullptr) {
@@ -38,7 +43,7 @@ DLL_EXPORT void Func2(int *p)
 
 DLL_EXPORT void Func3(int *p)
 {
-	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
 	std::cout << "  p = " << p << std::endl;
 	std::cout << "  *p = " << *p << std::endl;
 	if (p != nullptr) {
@@ -49,7 +54,7 @@ DLL_EXPORT void Func3(int *p)
 
 DLL_EXPORT void Func4(int n)
 {
-	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
 	std::cout << "  n = " << n << std::endl;
 	n = 456;
 	std::cout << "    => " << n << std::endl;
@@ -57,7 +62,7 @@ DLL_EXPORT void Func4(int n)
 
 DLL_EXPORT void Func5(int *p)
 {
-	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
 	std::cout << "  p = " << p << std::endl;
 	std::cout << "  *p = " << *p << std::endl;
 	if (p != nullptr) {
@@ -68,7 +73,7 @@ DLL_EXPORT void Func5(int *p)
 
 DLL_EXPORT void Func6(S s)
 {
-	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
 	std::cout << "  s.n = " << s.n << std::endl;
 	s.n = 456;
 	std::cout << "    => " << s.n << std::endl;
@@ -76,7 +81,7 @@ DLL_EXPORT void Func6(S s)
 
 DLL_EXPORT void Func7(S *p)
 {
-	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
 	std::cout << "  p = " << p << std::endl;
 	if (p != nullptr) {
 		std::cout << "  p->n = " << p->n << std::endl;
@@ -87,7 +92,7 @@ DLL_EXPORT void Func7(S *p)
 
 DLL_EXPORT void Func8(S *p)
 {
-	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
 	std::cout << "  p = " << p << std::endl;
 	if (p != nullptr) {
 		std::cout << "  p->n = " << p->n << std::endl;
@@ -98,7 +103,7 @@ DLL_EXPORT void Func8(S *p)
 
 DLL_EXPORT void Func9(S s)
 {
-	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
 	std::cout << "  s.n = " << s.n << std::endl;
 	s.n = 456;
 	std::cout << "    => " << s.n << std::endl;
@@ -106,7 +111,7 @@ DLL_EXPORT void Func9(S s)
 
 DLL_EXPORT void Func10(S *p)
 {
-	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
 	std::cout << "  p = " << p << std::endl;
 	if (p != nullptr) {
 		std::cout << "  p->n = " << p->n << std::endl;
@@ -120,7 +125,7 @@ DLL_EXPORT void Func10(S *p)
 
 DLL_EXPORT void Func11(C *p)
 {
-	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
 	std::cout << "  p = " << p << std::endl;
 	if (p != nullptr) {
 		std::cout << "  p->n = " << p->n << std::endl;
@@ -134,7 +139,7 @@ DLL_EXPORT void Func11(C *p)
 
 DLL_EXPORT void Func12(C **pp)
 {
-	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
 	std::cout << "  pp = " << pp << std::endl;
 	if (pp != nullptr) {
 		C *p = *pp;
