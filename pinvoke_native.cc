@@ -8,15 +8,20 @@
 #endif
 
 struct S {
-	int n;
+	int32_t n;
 	uint8_t b;
+	uint8_t reserved[3];
 };
 struct C {
-	int n;
+	int32_t n;
 	uint8_t b;
+	uint8_t reserved[3];
 };
 struct C2 {
 	C c;
+	int32_t n;
+	uint8_t b;
+	uint8_t reserved[3];
 };
 
 DLL_EXPORT void Func0()
@@ -157,9 +162,8 @@ DLL_EXPORT void Func12(C **pp)
 	}
 }
 
-DLL_EXPORT void Func100(C2 *c2)
+void Func100_(C2 *c2)
 {
-	std::cout << "Native: " << __FUNCTION__ << std::endl;
 	std::cout << "  c2 = " << c2 << std::endl;
 	if (c2 != nullptr) {
 		std::cout << "  c2->c.n = " << c2->c.n << std::endl;
@@ -168,7 +172,37 @@ DLL_EXPORT void Func100(C2 *c2)
 		std::cout << "  c2->c.b = " << (int)c2->c.b << std::endl;
 		c2->c.b = 90;
 		std::cout << "    => " << (int)c2->c.b << std::endl;
+		std::cout << "  c2->n = " << c2->n << std::endl;
+		c2->n = 987;
+		std::cout << "    => " << c2->n << std::endl;
+		std::cout << "  c2->b = " << (int)c2->b << std::endl;
+		c2->b = 65;
+		std::cout << "    => " << (int)c2->b << std::endl;
 	}
+}
+
+DLL_EXPORT void Func100(C2 *c2)
+{
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
+	Func100_(c2);
+}
+
+DLL_EXPORT void Func101(C2 *c2)
+{
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
+	Func100_(c2);
+}
+
+DLL_EXPORT void Func102(C2 *c2)
+{
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
+	Func100_(c2);
+}
+
+DLL_EXPORT void Func103(C2 *c2)
+{
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
+	Func100_(c2);
 }
 
 // Local variables:

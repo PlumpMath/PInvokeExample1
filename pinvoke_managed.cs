@@ -8,17 +8,25 @@ class Program
 	{
 		public int n;
 		public byte b;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+		byte[] reserved;
 	}
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	class C
 	{
 		public int n;
 		public byte b;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+		byte[] reserved;
 	}
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	class C2
 	{
 		public C c;
+		public int n;
+		public byte b;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+		byte[] reserved;
 	}
 
 	[DllImport("pinvoke_native")]
@@ -49,6 +57,12 @@ class Program
 	static extern void Func12(ref C c);
 	[DllImport("pinvoke_native")]
 	static extern void Func100(C2 c2);
+	[DllImport("pinvoke_native")]
+	static extern void Func101([In] C2 c2);
+	[DllImport("pinvoke_native")]
+	static extern void Func102([Out] C2 c2);
+	[DllImport("pinvoke_native")]
+	static extern void Func103([In, Out] C2 c2);
 
 	static void Main(string[] args)
 	{
@@ -153,9 +167,27 @@ class Program
 		}
 
 		{
-			var c2 = new C2 { c = new C { n = 123, b = 45 } };
+			var c2 = new C2 { c = new C { n = 123, b = 45 }, n = 678, b = 90 };
 			Func100(c2);
-			Console.WriteLine("Managed: c2.c.n = " + c2.c.n + ", c2.c.b = " + c2.c.b);
+			Console.WriteLine("Managed: c2.c.n = " + c2.c.n + ", c2.c.b = " + c2.c.b + ", c2.n = " + c2.n + ", c2.b = " + c2.b);
+		}
+
+		{
+			var c2 = new C2 { c = new C { n = 123, b = 45 }, n = 678, b = 90 };
+			Func101(c2);
+			Console.WriteLine("Managed: c2.c.n = " + c2.c.n + ", c2.c.b = " + c2.c.b + ", c2.n = " + c2.n + ", c2.b = " + c2.b);
+		}
+
+		{
+			var c2 = new C2 { c = new C { n = 123, b = 45 }, n = 678, b = 90 };
+			Func102(c2);
+			Console.WriteLine("Managed: c2.c.n = " + c2.c.n + ", c2.c.b = " + c2.c.b + ", c2.n = " + c2.n + ", c2.b = " + c2.b);
+		}
+
+		{
+			var c2 = new C2 { c = new C { n = 123, b = 45 }, n = 678, b = 90 };
+			Func103(c2);
+			Console.WriteLine("Managed: c2.c.n = " + c2.c.n + ", c2.c.b = " + c2.c.b + ", c2.n = " + c2.n + ", c2.b = " + c2.b);
 		}
 	}
 }
