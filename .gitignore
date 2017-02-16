@@ -1,3 +1,4 @@
+*.core
 *.dylib
 *.exe
 *.mdb
