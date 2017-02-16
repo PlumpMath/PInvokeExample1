@@ -11,10 +11,12 @@ struct S {
 	int n;
 	uint8_t b;
 };
-class C {
-public:
+struct C {
 	int n;
 	uint8_t b;
+};
+struct C2 {
+	C c;
 };
 
 DLL_EXPORT void Func0()
@@ -152,6 +154,20 @@ DLL_EXPORT void Func12(C **pp)
 			p->b = 90;
 			std::cout << "    => " << (int)p->b << std::endl;
 		}
+	}
+}
+
+DLL_EXPORT void Func100(C2 *c2)
+{
+	std::cout << "Native: " << __FUNCTION__ << std::endl;
+	std::cout << "  c2 = " << c2 << std::endl;
+	if (c2 != nullptr) {
+		std::cout << "  c2->c.n = " << c2->c.n << std::endl;
+		c2->c.n = 678;
+		std::cout << "    => " << c2->c.n << std::endl;
+		std::cout << "  c2->c.b = " << (int)c2->c.b << std::endl;
+		c2->c.b = 90;
+		std::cout << "    => " << (int)c2->c.b << std::endl;
 	}
 }
 

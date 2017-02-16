@@ -15,6 +15,11 @@ class Program
 		public int n;
 		public byte b;
 	}
+	[StructLayout(LayoutKind.Sequential, Pack = 1)]
+	class C2
+	{
+		public C c;
+	}
 
 	[DllImport("pinvoke_native")]
 	static extern void Func0();
@@ -42,6 +47,8 @@ class Program
 	static extern void Func11(C c);
 	[DllImport("pinvoke_native")]
 	static extern void Func12(ref C c);
+	[DllImport("pinvoke_native")]
+	static extern void Func100(C2 c2);
 
 	static void Main(string[] args)
 	{
@@ -143,6 +150,12 @@ class Program
 			var c = new C { n = 123, b = 45 };
 			Func12(ref c);
 			Console.WriteLine("Managed: c.n = " + c.n + ", c.b = " + c.b);
+		}
+
+		{
+			var c2 = new C2 { c = new C { n = 123, b = 45 } };
+			Func100(c2);
+			Console.WriteLine("Managed: c2.c.n = " + c2.c.n + ", c2.c.b = " + c2.c.b);
 		}
 	}
 }
