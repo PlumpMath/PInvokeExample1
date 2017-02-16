@@ -7,6 +7,7 @@ struct S {
 	uint8_t b;
 };
 class C {
+public:
 	int n;
 	uint8_t b;
 };
@@ -114,6 +115,38 @@ DLL_EXPORT void Func10(S *p)
 		std::cout << "  p->b = " << (int)p->b << std::endl;
 		p->b = 90;
 		std::cout << "    => " << (int)p->b << std::endl;
+	}
+}
+
+DLL_EXPORT void Func11(C *p)
+{
+	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "  p = " << p << std::endl;
+	if (p != nullptr) {
+		std::cout << "  p->n = " << p->n << std::endl;
+		p->n = 678;
+		std::cout << "    => " << p->n << std::endl;
+		std::cout << "  p->b = " << (int)p->b << std::endl;
+		p->b = 90;
+		std::cout << "    => " << (int)p->b << std::endl;
+	}
+}
+
+DLL_EXPORT void Func12(C **pp)
+{
+	std::cout << "Native: " << __PRETTY_FUNCTION__ << std::endl;
+	std::cout << "  pp = " << pp << std::endl;
+	if (pp != nullptr) {
+		C *p = *pp;
+		std::cout << "  p = " << p << std::endl;
+		if (p != nullptr) {
+			std::cout << "  p->n = " << p->n << std::endl;
+			p->n = 678;
+			std::cout << "    => " << p->n << std::endl;
+			std::cout << "  p->b = " << (int)p->b << std::endl;
+			p->b = 90;
+			std::cout << "    => " << (int)p->b << std::endl;
+		}
 	}
 }
 

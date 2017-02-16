@@ -38,6 +38,10 @@ class Program
 	static extern void Func9([Out] S s);
 	[DllImport("pinvoke_native")]
 	static extern void Func10(IntPtr ptr);
+	[DllImport("pinvoke_native")]
+	static extern void Func11(C c);
+	[DllImport("pinvoke_native")]
+	static extern void Func12(ref C c);
 
 	static void Main(string[] args)
 	{
@@ -127,6 +131,18 @@ class Program
 			ofs += 1;
 			Marshal.FreeCoTaskMem(ptr);
 			Console.WriteLine("Managed: s.n = " + s.n + ", s.b = " + s.b);
+		}
+
+		{
+			var c = new C { n = 123, b = 45 };
+			Func11(c);
+			Console.WriteLine("Managed: c.n = " + c.n + ", c.b = " + c.b);
+		}
+
+		{
+			var c = new C { n = 123, b = 45 };
+			Func12(ref c);
+			Console.WriteLine("Managed: c.n = " + c.n + ", c.b = " + c.b);
 		}
 	}
 }
